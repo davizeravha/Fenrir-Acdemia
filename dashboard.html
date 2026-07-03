@@ -33,6 +33,20 @@
             <p>Novo equipamento de Leg Press chegou na unidade Centro! Nossas vídeo aulas de postura também foram atualizadas.</p>
         </header>
 
+<section class="banner-carousel">
+            <div class="banner-slide ativa">
+                <img src="img/banner1.png" alt="Promoção de Inverno">
+            </div>
+            
+            <div class="banner-slide">
+                <img src="img/banner2.png" alt="Novo Treino de Força">
+            </div>
+            
+            <div class="banner-slide">
+                <img src="img/banner3.png" alt="Chegou Nova Coleção">
+            </div>
+        </section>
+
         <div class="dashboard-grid">
             
             <section class="dash-card">
@@ -55,19 +69,47 @@
     </main>
 
    <script>
-        // Abre a mochila (localStorage) e pega o nome que salvamos no login
+        // === 1. CARREGA O NOME DO USUÁRIO ===
         const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
-        
+        let nomeFinal = "Lobo"; 
+
         if (nomeSalvo) {
-            // Pega a primeira letra e transforma em maiúscula, depois junta com o resto do nome
-            const nomeFormatado = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
-            
-            // Encontra a tag no HTML e injeta o nome formatado
-            document.getElementById('nomeUsuario').textContent = nomeFormatado;
-        } else {
-            // Se alguém tentar entrar na página direto pelo link sem fazer login, mostra um padrão
-            document.getElementById('nomeUsuario').textContent = "Lobo";
+            nomeFinal = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
         }
+
+        document.getElementById('nomeUsuario').textContent = nomeFinal;
+
+        // === 3. LÓGICA DO CARROSSEL DE BANNERS (VERSÃO BLINDADA) ===
+        
+        function iniciarCarrossel() {
+            // Procura os banners
+            const slides = document.querySelectorAll('.banner-slide');
+            
+            // Se não achar nenhum banner no HTML, ele cancela para não dar erro
+            if (slides.length === 0) {
+                console.log("Nenhum banner encontrado no HTML.");
+                return; 
+            }
+
+            let slideAtual = 0;
+            const tempoDoBanner = 3000; // 3000 = 3 segundos (perfeito para testar rápido)
+
+            // Cria o relógio que vai rodar infinitamente
+            setInterval(() => {
+                // 1. Remove a classe 'ativa' do banner atual
+                slides[slideAtual].classList.remove('ativa');
+                
+                // 2. Calcula qual é o próximo (se chegar no fim, volta pro zero)
+                slideAtual = (slideAtual + 1) % slides.length;
+                
+                // 3. Adiciona a classe 'ativa' no novo banner
+                slides[slideAtual].classList.add('ativa');
+                
+            }, tempoDoBanner);
+        }
+
+        // Liga o motor do carrossel
+        iniciarCarrossel();
     </script>
 </body>
 </html>

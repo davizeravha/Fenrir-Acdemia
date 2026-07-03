@@ -720,3 +720,82 @@ VÍDEO AULAS   =================================================================
         grid-template-columns: 1fr; /* Quebra para ficar um embaixo do outro no celular */
     }
 }
+/* ==========================================================================
+   CARROSSEL DE BANNERS ROTATIVOS
+   ========================================================================== */
+
+.banner-carousel {
+    position: relative;
+    width: 100%;
+    height: 250px; /* Altura do banner no computador */
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    background-color: var(--cor-painel);
+}
+
+.banner-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Efeito de transição suave de 1 segundo */
+    z-index: 1;
+}
+
+.banner-slide.ativa {
+    opacity: 1;
+    z-index: 2;
+}
+
+.banner-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* A imagem se adapta perfeitamente sem distorcer */
+}
+
+/* ==========================================================================
+   CARROSSEL DE BANNERS ROTATIVOS
+   ========================================================================== */
+
+.banner-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* Trava o limite máximo em 1200px */
+    aspect-ratio: 1200 / 400; /* Mantém a proporção exata sempre! */
+    margin: 0 auto 30px auto; /* Centraliza o banner e dá o espaço embaixo */
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    background-color: var(--cor-painel);
+}
+
+/* O resto continua igual... */
+.banner-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out; 
+    z-index: 1;
+}
+
+.banner-slide.ativa {
+    opacity: 1;
+    z-index: 2;
+}
+
+.banner-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+/* ⚠️ ATENÇÃO: Apague a media query antiga de 768px que definia a altura (height) do banner para o celular. O aspect-ratio já faz o cálculo automático para o celular e não deixa a imagem esticada! */

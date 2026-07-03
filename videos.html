@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenrir Academia - Vídeo Aulas</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="user-greeting">
+            <span class="user-icon">🐺</span>
+            <h2>Olá, <span id="nomeUsuario">Lobo</span></h2>
+        </div>
+
+        <nav class="menu-nav">
+            <a href="dashboard.html" class="menu-item">Página Inicial</a>
+            <a href="treinos.html" class="menu-item">Meus Treinos</a>
+            <a href="videos.html" class="menu-item active">Vídeo Aulas</a>
+            <a href="shopping.html" class="menu-item">Shopping</a>
+            <a href="#" class="menu-item">Meus Pedidos</a>
+            <a href="contato.html" class="menu-item">Contato</a>
+        </nav>
+
+        <a href="index.html" class="logout-btn">Sair da Conta</a>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="page-header">
+            <h1>▶️ Central de Aulas</h1>
+            <p>Aprenda a execução perfeita dos movimentos e evite lesões.</p>
+        </header>
+
+        <div class="video-filters">
+            <button class="filter-btn active">Todos</button>
+            <button class="filter-btn">Superiores</button>
+            <button class="filter-btn">Inferiores</button>
+            <button class="filter-btn">Mobilidade</button>
+        </div>
+
+        <div class="videos-grid">
+            
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <div class="play-icon">▶</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-tag">Inferiores</span>
+                    <h3>Agachamento Livre Perfeito</h3>
+                    <p>Prof. Márcio • 12 min</p>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <div class="play-icon">▶</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-tag">Superiores</span>
+                    <h3>Ativando o Peitoral no Supino</h3>
+                    <p>Profª. Sarah • 8 min</p>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <div class="play-icon">▶</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-tag">Mobilidade</span>
+                    <h3>Destravando o Quadril</h3>
+                    <p>Prof. Márcio • 15 min</p>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <div class="play-icon">▶</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-tag">Inferiores</span>
+                    <h3>Erros Comuns no Leg Press</h3>
+                    <p>Profª. Sarah • 10 min</p>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <div class="play-icon">▶</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-tag">Superiores</span>
+                    <h3>Remada Curvada sem dor nas costas</h3>
+                    <p>Prof. Márcio • 14 min</p>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <div class="play-icon">▶</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-tag">Mobilidade</span>
+                    <h3>Aquecimento de Manguito</h3>
+                    <p>Profª. Sarah • 5 min</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
+        if (nomeSalvo) {
+            const nomeFormatado = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
+            document.getElementById('nomeUsuario').textContent = nomeFormatado;
+        } else {
+            document.getElementById('nomeUsuario').textContent = "Lobo";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenrir Academia - Cadastro</title>
+    
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="login-container">
+        
+        <div class="login-header">
+            <div class="logo-placeholder">
+                <span class="logo-wolf">🐺</span>
+                <h1>Fenrir</h1>
+            </div>
+            <h2>Crie sua conta</h2>
+        </div>
+
+        <form class="register-form">
+            
+            <div class="input-group">
+                <label for="reg-nome">Nome Completo</label>
+                <input type="text" id="reg-nome" placeholder="Digite seu nome" required>
+            </div>
+
+            <div class="input-group">
+                <label for="reg-email">E-mail</label>
+                <input type="email" id="reg-email" placeholder="Digite seu melhor e-mail" required>
+            </div>
+
+            <div class="input-group">
+                <label for="reg-password">Crie uma Senha (mínimo 6 letras/números)</label>
+                <input type="password" id="reg-password" placeholder="Crie sua senha" required>
+            </div>
+
+            <button type="submit" class="btn-submit">CADASTRAR ALUNO</button>
+        </form>
+
+        <div class="login-footer">
+            <p>Já é da alcateia? <a href="index.html" class="register-link">Faça login aqui</a></p>
+        </div>
+        
+    </div>
+
+    <script type="module" src="register.js"></script>
+</body>
+</html>

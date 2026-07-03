@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenrir Academia - Meus Treinos</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="user-greeting">
+            <span class="user-icon">🐺</span>
+            <h2>Olá, <span id="nomeUsuario">Lobo</span></h2>
+        </div>
+
+        <nav class="menu-nav">
+            <a href="dashboard.html" class="menu-item">Página Inicial</a>
+            <a href="treinos.html" class="menu-item active">Meus Treinos</a>
+            <a href="#" class="menu-item">Vídeo Aulas</a>
+            <a href="shopping.html" class="menu-item">Shopping</a>
+            <a href="pedidos.html" class="menu-item">Meus Pedidos</a>
+            <a href="contato.html" class="menu-item">Contato</a>
+        </nav>
+
+        <a href="index.html" class="logout-btn">Sair da Conta</a>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="page-header">
+            <h1>💪 Ficha de Treinamento</h1>
+            <p>Selecione o seu treino do dia e registre o seu progresso.</p>
+        </header>
+
+      <div class="treinos-grid">
+            
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Treino A</h3>
+                    <span class="treino-foco">Peito e Tríceps</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Supino Reto (Barra)</td><td>4</td><td>10 a 12</td></tr>
+                        <tr><td>Crucifixo no Crossover</td><td>4</td><td>15</td></tr>
+                        <tr><td>Tríceps Pulley</td><td>4</td><td>12 a 15</td></tr>
+                        <tr><td>Tríceps Testa</td><td>3</td><td>10</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Treino B</h3>
+                    <span class="treino-foco">Costas e Bíceps</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Puxada Frontal</td><td>4</td><td>12</td></tr>
+                        <tr><td>Remada Curvada</td><td>4</td><td>10 a 12</td></tr>
+                        <tr><td>Rosca Direta</td><td>3</td><td>12</td></tr>
+                        <tr><td>Rosca Martelo</td><td>3</td><td>15</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Treino C</h3>
+                    <span class="treino-foco">Pernas Completas</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Agachamento Livre</td><td>4</td><td>10</td></tr>
+                        <tr><td>Leg Press 45°</td><td>4</td><td>12</td></tr>
+                        <tr><td>Cadeira Extensora</td><td>4</td><td>15</td></tr>
+                        <tr><td>Panturrilha Sentado</td><td>4</td><td>20</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Treino D</h3>
+                    <span class="treino-foco">Ombros e Core</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Desenvolvimento Halter</td><td>4</td><td>10</td></tr>
+                        <tr><td>Elevação Lateral</td><td>4</td><td>15</td></tr>
+                        <tr><td>Prancha Isométrica</td><td>3</td><td>60 seg</td></tr>
+                        <tr><td>Abdominal Supra</td><td>4</td><td>20</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Full Body</h3>
+                    <span class="treino-foco">Corpo Inteiro</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Levantamento Terra</td><td>4</td><td>8</td></tr>
+                        <tr><td>Supino Inclinado</td><td>3</td><td>10</td></tr>
+                        <tr><td>Barra Fixa</td><td>3</td><td>Falha</td></tr>
+                        <tr><td>Afundo com Halteres</td><td>3</td><td>12</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>HIIT Cardio</h3>
+                    <span class="treino-foco">Emagrecimento</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Esteira (Tiro Máximo)</td><td>8</td><td>30 seg</td></tr>
+                        <tr><td>Burpees</td><td>4</td><td>15</td></tr>
+                        <tr><td>Corda Naval</td><td>4</td><td>45 seg</td></tr>
+                        <tr><td>Jumping Jacks</td><td>4</td><td>1 min</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Força Bruta</h3>
+                    <span class="treino-foco">Powerlifting</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Agachamento Pesado</td><td>5</td><td>5</td></tr>
+                        <tr><td>Supino Reto Força</td><td>5</td><td>5</td></tr>
+                        <tr><td>Levantamento Terra</td><td>5</td><td>3</td></tr>
+                        <tr><td>Remada Pendlay</td><td>4</td><td>6</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Mobilidade</h3>
+                    <span class="treino-foco">Alongamento</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Rotação Torácica</td><td>3</td><td>10 cada</td></tr>
+                        <tr><td>Alongamento Gato-Vaca</td><td>3</td><td>12</td></tr>
+                        <tr><td>Ponte de Glúteos</td><td>3</td><td>15</td></tr>
+                        <tr><td>Caminhada na Esteira</td><td>1</td><td>15 min</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Glúteos e Posterior</h3>
+                    <span class="treino-foco">Membros Inferiores</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Elevação Pélvica</td><td>4</td><td>12 a 15</td></tr>
+                        <tr><td>Cadeira Flexora</td><td>4</td><td>12</td></tr>
+                        <tr><td>Stiff com Barra</td><td>4</td><td>10</td></tr>
+                        <tr><td>Abdução de Quadril</td><td>3</td><td>15</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+            <section class="dash-card treino-card">
+                <div class="treino-header">
+                    <h3>Funcional</h3>
+                    <span class="treino-foco">Peso do Corpo</span>
+                </div>
+                <table class="treino-table">
+                    <thead><tr><th>Exercício</th><th>Séries</th><th>Repetições</th></tr></thead>
+                    <tbody>
+                        <tr><td>Flexão de Braço</td><td>4</td><td>Falha</td></tr>
+                        <tr><td>Agachamento Livre</td><td>4</td><td>20</td></tr>
+                        <tr><td>Barra Australiana</td><td>4</td><td>12</td></tr>
+                        <tr><td>Mountain Climbers</td><td>4</td><td>40 seg</td></tr>
+                    </tbody>
+                </table>
+                <button class="btn-iniciar">Iniciar Treino</button>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
+        if (nomeSalvo) {
+            const nomeFormatado = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
+            document.getElementById('nomeUsuario').textContent = nomeFormatado;
+        } else {
+            document.getElementById('nomeUsuario').textContent = "Lobo";
+        }
+    </script>
+</body>
+</html>

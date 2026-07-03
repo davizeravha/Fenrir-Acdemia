@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenrir Academia - Início</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="user-greeting">
+            <span class="user-icon">🐺</span>
+            <h2>Olá, <span id="nomeUsuario">Lobo</span></h2>
+        </div>
+
+        <nav class="menu-nav">
+            <a href="#" class="menu-item active">Página Inicial</a>
+            <a href="treinos.html" class="menu-item">Meus Treinos</a>
+            <a href="videos.html" class="menu-item">Vídeo Aulas</a>
+            <a href="shopping.html" class="menu-item">Shopping</a>
+            <a href="pedidos.html" class="menu-item">Meus Pedidos</a>
+            <a href="contato.html" class="menu-item">Contato</a>
+        </nav>
+
+        <a href="index.html" class="logout-btn">Sair da Conta</a>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="notice-board">
+            <h3>⚠️ Quadro de Avisos</h3>
+            <p>Novo equipamento de Leg Press chegou na unidade Centro! Nossas vídeo aulas de postura também foram atualizadas.</p>
+        </header>
+
+        <div class="dashboard-grid">
+            
+            <section class="dash-card">
+                <h3>Vídeo Aulas Recentes</h3>
+                <div class="video-placeholder">
+                    <span>▶️ Como executar o agachamento perfeito</span>
+                </div>
+                <div class="video-placeholder">
+                    <span>▶️ Treino HIIT de 15 minutos</span>
+                </div>
+            </section>
+
+            <section class="dash-card">
+                <h3>Shopping Fenrir</h3>
+                <p>Suplementos, camisetas e acessórios com desconto para alunos.</p>
+                <button class="btn-loja">Acessar Loja</button>
+            </section>
+
+        </div>
+    </main>
+
+   <script>
+        // Abre a mochila (localStorage) e pega o nome que salvamos no login
+        const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
+        
+        if (nomeSalvo) {
+            // Pega a primeira letra e transforma em maiúscula, depois junta com o resto do nome
+            const nomeFormatado = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
+            
+            // Encontra a tag no HTML e injeta o nome formatado
+            document.getElementById('nomeUsuario').textContent = nomeFormatado;
+        } else {
+            // Se alguém tentar entrar na página direto pelo link sem fazer login, mostra um padrão
+            document.getElementById('nomeUsuario').textContent = "Lobo";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+﻿:root {
+    --cor-primaria: #2DFA5D;
+    --cor-fundo: #000000;
+    --cor-texto-claro: #FFFFFF;
+    --cor-input-fundo: #121212;
+    --cor-borda: #222222;
+    --fonte-titulos: 'Agrandir Wide', sans-serif;
+    --fonte-corpo: 'Canva Sans', sans-serif;
+}
+
+/* Fontes do Canva */
+@font-face {
+    font-family: 'Agrandir Wide';
+    src: url('fontes/agrandir-wide-bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Canva Sans';
+    src: url('fontes/CanvaSans-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-claro);
+    font-family: var(--fonte-corpo);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.login-container {
+    background-color: #080808;
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo-placeholder {
+    margin-bottom: 20px;
+}
+
+.logo-wolf {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.logo-placeholder h1 {
+    font-family: var(--fonte-titulos);
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-transform: none;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+.logo-placeholder .subtitle {
+    font-family: var(--fonte-corpo);
+    font-size: 0.9rem;
+    letter-spacing: 6px;
+    color: var(--cor-texto-claro);
+    margin-top: 2px;
+    text-indent: 6px;
+}
+
+.login-header h2 {
+    font-family: var(--fonte-titulos);
+    font-size: 1.2rem;
+    color: var(--cor-primaria);
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    color: #999999;
+    font-weight: 500;
+}
+
+.input-group input {
+    background-color: var(--cor-input-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    color: var(--cor-texto-claro);
+    font-family: var(--fonte-corpo);
+    padding: 14px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 8px rgba(45, 250, 93, 0.2);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.forgot-password {
+    color: #999999;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: var(--cor-primaria);
+}
+
+.btn-submit {
+    background-color: var(--cor-primaria);
+    border: none;
+    border-radius: 6px;
+    color: var(--cor-fundo);
+    font-family: var(--fonte-titulos);
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    padding: 15px;
+    cursor: pointer;
+    transition: transform 0.1s ease, background-color 0.2s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #24c94b;
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #999999;
+}
+
+.register-link {
+    color: var(--cor-primaria);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Animação do AUUUUUUUUUU
+   ========================================================================== */
+
+/* Tela negona */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--cor-fundo);
+    display: flex;
+    align-items: center;
+    z-index: 9999;
+    
+    overflow: hidden; 
+    
+    /* Tempo de espera té a tela negona sair */
+    animation: fadeOutSplash 0.8s ease-in-out 2.2s forwards;
+}
+
+/* O texto do AUUUUUUUUU */
+.splash-howl {
+    font-family: var(--fonte-titulos);
+    font-size: 40vw; /* Tamanho bem grande e impactante */
+    font-weight: 900;
+    color: var(--cor-primaria); /* Verde Vívido */
+    white-space: nowrap; /* Impede que o texto quebre em duas linhas */
+    
+    /* Animação que empurra o AUUUUUUUUU */
+    animation: slideHowl 2s linear forwards;
+}
+
+/* 1. Trajetória da Direita para Esquerda */
+@keyframes slideHowl {
+    0% {
+        transform: translateX(100vw); /* Começa 100% fora da tela, à direita */
+        opacity: 0;
+    }
+    10% {
+        opacity: 1; /* Aparece rapidamente */
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100vw); /* Termina 100% fora da tela, à esquerda */
+        opacity: 0; /* Some no final */
+    }
+}
+
+/* 2. Tela negona saindo e cliques são liberados */
+@keyframes fadeOutSplash {
+    0% { opacity: 1; visibility: visible; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+/* 3. Tela de login subindo após o AUUUUUUUUU passar */
+.login-container {
+    animation: fadeInLogin 1s ease-out 2.2s both;
+}
+
+@keyframes fadeInLogin {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenrir Academia - Contato</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <!-- MENU DA LATERALZINHA BEBE -->
+    <aside class="sidebar">
+        <div class="user-greeting">
+            <span class="user-icon">🐺</span>
+            <h2>Olá, <span id="nomeUsuario">Lobo</span></h2>
+        </div>
+
+        <nav class="menu-nav">
+            <a href="dashboard.html" class="menu-item">Página Inicial</a>
+            <a href="treinos.html" class="menu-item">Meus Treinos</a>
+            <a href="videos.html" class="menu-item">Vídeo Aulas</a>
+            <a href="shopping.html" class="menu-item">Shopping</a>
+            <a href="pedidos.html" class="menu-item">Meus Pedidos</a>
+            <a href="contato.html" class="menu-item active">Contato</a>
+        </nav>
+
+        <a href="index.html" class="logout-btn">Sair da Conta</a>
+    </aside>
+
+    <!-- AREA PRINCIPAL -->
+    <main class="main-content">
+        
+        <header class="page-header">
+            <h1>📞 Fale com a Alcateia</h1>
+            <p>Dúvidas sobre treinos, pagamentos ou produtos? Mande uma mensagem para a nossa equipe.</p>
+        </header>
+
+        <div class="contact-container">
+            
+            <!-- Informações de Contato Direto -->
+            <div class="contact-info">
+                <div class="info-card">
+                    <span class="info-icon">📱</span>
+                    <div>
+                        <h3>WhatsApp da Recepção</h3>
+                        <p>(11) 99999-0000</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <span class="info-icon">✉️</span>
+                    <div>
+                        <h3>E-mail</h3>
+                        <p>suporte@fenriracademia.com.br</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <span class="info-icon">📍</span>
+                    <div>
+                        <h3>Nossa Base</h3>
+                        <p>Rua dos Lobos, 123 - São Paulo, SP</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMULARIO DO LOBAO -->
+            <form class="contact-form" id="formContato">
+                <h2>Envie sua mensagem</h2>
+                
+                <div class="input-group">
+                    <label for="assunto">Assunto</label>
+                    <select id="assunto" required>
+                        <option value="">Selecione um assunto...</option>
+                        <option value="Dúvida sobre Treino">Dúvida sobre Treino</option>
+                        <option value="Problema com Pedido">Problema com Pedido</option>
+                        <option value="Mensalidade/Pagamento">Mensalidade / Pagamento</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="mensagem">Sua Mensagem</label>
+                    <textarea id="mensagem" rows="5" placeholder="Digite sua mensagem aqui..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-enviar">Uivar para o Suporte (Enviar)</button>
+            </form>
+
+        </div>
+    </main>
+
+    <script>
+        // === 1. CARGA DE NOME DE USUARIO ===
+        const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
+        if (nomeSalvo) {
+            const nomeFormatado = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
+            document.getElementById('nomeUsuario').textContent = nomeFormatado;
+        } else {
+            document.getElementById('nomeUsuario').textContent = "Lobo";
+        }
+
+        // === 2. LOGICA DO FORMULARIO DE CONTATO ===
+        const formContato = document.getElementById('formContato');
+        
+        formContato.addEventListener('submit', function(event) {
+            // Impede a página de recarregar
+            event.preventDefault();
+            
+            // Mensagem de sucesso:
+            alert('🐺 Aúúú! Sua mensagem foi enviada para a nossa equipe.\nRetornaremos o contato em breve!');
+            
+            // RESET DO FORMS AUTOMATICAMENTE
+            formContato.reset();
+        });
+    </script>
+</body>
+</html>

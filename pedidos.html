@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenrir Academia - Meus Pedidos</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <!-- Menu Lateral (Sidebar) -->
+    <aside class="sidebar">
+        <div class="user-greeting">
+            <span class="user-icon">🐺</span>
+            <h2>Olá, <span id="nomeUsuario">Lobo</span></h2>
+        </div>
+
+        <nav class="menu-nav">
+            <a href="dashboard.html" class="menu-item">Página Inicial</a>
+            <a href="treinos.html" class="menu-item">Meus Treinos</a>
+            <a href="videos.html" class="menu-item">Vídeo Aulas</a>
+            <a href="shopping.html" class="menu-item">Shopping</a>
+            <a href="pedidos.html" class="menu-item active">Meus Pedidos</a>
+            <a href="contato.html" class="menu-item">Contato</a>
+        </nav>
+
+        <a href="index.html" class="logout-btn">Sair da Conta</a>
+    </aside>
+
+    <!-- Área Principal de Conteúdo -->
+    <main class="main-content">
+        
+        <header class="page-header">
+            <h1>📦 Meus Pedidos</h1>
+            <p>Acompanhe o status das suas compras feitas no Shopping Fenrir.</p>
+        </header>
+
+        <!-- Lista de Pedidos (Vazia no HTML, será preenchida magicamente pelo JavaScript) -->
+        <div class="orders-list" id="listaPedidos">
+            <!-- Os cartões de pedidos vão aparecer aqui! -->
+        </div>
+    </main>
+
+    <script>
+        // === 1. CARREGAR NOME DO USUÁRIO ===
+        const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
+        if (nomeSalvo) {
+            const nomeFormatado = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
+            document.getElementById('nomeUsuario').textContent = nomeFormatado;
+        } else {
+            document.getElementById('nomeUsuario').textContent = "Lobo";
+        }
+
+        // === 2. CARREGAR PEDIDOS DINÂMICOS DO SHOPPING ===
+        
+        // Encontra a área onde os pedidos vão aparecer
+        const containerPedidos = document.getElementById('listaPedidos');
+
+        // Tira os pedidos da mochila (localStorage)
+        const meusPedidos = JSON.parse(localStorage.getItem('pedidosFenrir')) || [];
+
+        // Verifica se a lista de pedidos está vazia
+        if (meusPedidos.length === 0) {
+            containerPedidos.innerHTML = '<p style="color: var(--cor-texto-secundario); text-align: center; padding: 50px; font-size: 1.1rem;">Você ainda não fez nenhum pedido no Shopping.</p>';
+        } else {
+            // Se tiver pedido, inverte a lista (pro mais novo ficar no topo) e cria os cartões
+            meusPedidos.reverse().forEach(pedido => {
+                
+                // Cria a caixa do pedido
+                const cartaoHtml = document.createElement('div');
+                cartaoHtml.className = 'order-card';
+                
+                // Desenha as informações reais do pedido dentro da caixa
+                cartaoHtml.innerHTML = `
+                    <div class="order-icon">⏳</div>
+                    <div class="order-details">
+                        <div class="order-header">
+                            <h3>Pedido #FN-${pedido.id}</h3>
+                            <span class="status-badge status-processing">${pedido.status}</span>
+                        </div>
+                        <p class="order-date">Realizado em: ${pedido.data}</p>
+                        <p class="order-items">${pedido.itens}</p>
+                    </div>
+                    <div class="order-actions">
+                        <span class="order-total">${pedido.total}</span>
+                        <button class="btn-outline">Detalhes</button>
+                    </div>
+                `;
+                
+                // Injeta o cartão pronto na tela
+                containerPedidos.appendChild(cartaoHtml);
+            });
+        }
+    </script>
+</body>
+</html>

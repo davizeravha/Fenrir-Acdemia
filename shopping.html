@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenrir Academia - Shopping</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="user-greeting">
+            <span class="user-icon">🐺</span>
+            <h2>Olá, <span id="nomeUsuario">Lobo</span></h2>
+        </div>
+
+        <nav class="menu-nav">
+            <a href="dashboard.html" class="menu-item">Página Inicial</a>
+            <a href="treinos.html" class="menu-item">Meus Treinos</a>
+            <a href="videos.html" class="menu-item">Vídeo Aulas</a>
+            <a href="shopping.html" class="menu-item active">Shopping</a>
+            <a href="pedidos.html" class="menu-item">Meus Pedidos</a>
+            <a href="contato.html" class="menu-item">Contato</a>
+        </nav>
+
+        <a href="index.html" class="logout-btn">Sair da Conta</a>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="page-header">
+            <h1>🛒 Shopping Fenrir</h1>
+            <p>Os melhores suplementos e equipamentos com desconto exclusivo para a nossa alcateia.</p>
+        </header>
+
+        <div class="shop-filters">
+            <button class="filter-btn active">Todos</button>
+            <button class="filter-btn">Suplementos</button>
+            <button class="filter-btn">Vestuário</button>
+            <button class="filter-btn">Acessórios</button>
+        </div>
+
+        <div class="shop-grid">
+            
+            <!-- PRODUTO 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <!-- Imagem real adicionada aqui -->
+                    <img src="img/whey.png" alt="Whey Protein Isolado 900g" style="width: 100%; height: 200px; object-fit: contain; border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Suplementos</span>
+                    <h3>Whey Protein Isolado 900g</h3>
+                    <div class="price-row">
+                        <span class="price">R$ 149,90</span>
+                    </div>
+                    <button class="btn-comprar">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <!-- PRODUTO 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <!-- Imagem real adicionada aqui -->
+                    <img src="img/creatina.png" alt="Creatina Monohidratada 300g" style="width: 100%; height: 200px; object-fit: contain; border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Suplementos</span>
+                    <h3>Creatina Monohidratada 300g</h3>
+                    <div class="price-row">
+                        <span class="price">R$ 89,90</span>
+                    </div>
+                    <button class="btn-comprar">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <!-- PRODUTO 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <!-- Imagem real adicionada aqui -->
+                    <img src="img/camiseta.png" alt="Camiseta Oversized Fenrir" style="width: 100%; height: 200px; object-fit: contain; border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Vestuário</span>
+                    <h3>Camiseta Oversized Fenrir</h3>
+                    <div class="price-row">
+                        <span class="price">R$ 65,00</span>
+                    </div>
+                    <button class="btn-comprar">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <!-- PRODUTO 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <!-- Imagem real adicionada aqui -->
+                    <img src="img/coqueteleira.png" alt="Coqueteleira Premium 600ml" style="width: 100%; height: 200px; object-fit: contain; border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Acessórios</span>
+                    <h3>Coqueteleira Premium 600ml</h3>
+                    <div class="price-row">
+                        <span class="price">R$ 25,90</span>
+                    </div>
+                    <button class="btn-comprar">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <!-- PRODUTO 5 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <!-- Imagem real adicionada aqui -->
+                    <img src="img/pretreino.png" alt="Pré-Treino Explosão" style="width: 100%; height: 200px; object-fit: contain; border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Suplementos</span>
+                    <h3>Pré-Treino Explosão</h3>
+                    <div class="price-row">
+                        <span class="price">R$ 110,00</span>
+                    </div>
+                    <button class="btn-comprar">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <!-- PRODUTO 6 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <!-- Imagem real adicionada aqui -->
+                    <img src="img/luva.png" alt="Luva de Treino Caleira" style="width: 100%; height: 200px; object-fit: contain; border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Acessórios</span>
+                    <h3>Luva de Treino Caleira</h3>
+                    <div class="price-row">
+                        <span class="price">R$ 45,00</span>
+                    </div>
+                    <button class="btn-comprar">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+// Pega o código que já estava lá para o nome do usuário
+const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
+if (nomeSalvo) {
+    const nomeFormatado = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
+    document.getElementById('nomeUsuario').textContent = nomeFormatado;
+} else {
+    document.getElementById('nomeUsuario').textContent = "Lobo";
+}
+
+// === NOVO CÓDIGO: SISTEMA DE COMPRAS ===
+
+// 1. Encontra todos os botões de comprar da página
+const botoesComprar = document.querySelectorAll('.btn-comprar');
+
+// 2. Para cada botão, adicionamos uma ação de clique
+botoesComprar.forEach(botao => {
+    botao.addEventListener('click', function(event) {
+        // Encontra o cartão do produto que foi clicado
+        const cartaoProduto = event.target.closest('.product-card');
+        
+        // Pega o nome e o preço digitados no HTML do cartão
+        const nomeProduto = cartaoProduto.querySelector('h3').textContent;
+        const precoProduto = cartaoProduto.querySelector('.price').textContent;
+        
+        // Cria um "recibo" para o novo pedido
+        const novoPedido = {
+            id: Math.floor(Math.random() * 10000), // Gera um número aleatório para o pedido
+            data: new Date().toLocaleDateString('pt-BR'), // Pega a data de hoje
+            itens: '1x ' + nomeProduto,
+            total: precoProduto,
+            status: 'Processando' // Todo pedido novo começa como processando
+        };
+        
+        // 3. Abre a "mochila" de pedidos. Se não existir, cria uma lista vazia []
+        let meusPedidos = JSON.parse(localStorage.getItem('pedidosFenrir')) || [];
+        
+        // 4. Adiciona o novo pedido na lista
+        meusPedidos.push(novoPedido);
+        
+        // 5. Salva a lista atualizada de volta na mochila (localStorage)
+        localStorage.setItem('pedidosFenrir', JSON.stringify(meusPedidos));
+        
+        // Dá um aviso visual para o usuário
+        alert('📦 Produto: ' + nomeProduto + '\nAdicionado aos seus pedidos com sucesso!');
+    });
+});
+    </script>
+</body>
+</html>

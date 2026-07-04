@@ -1,13 +1,13 @@
 // 1. Importa o núcleo do Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 // 2. Importa a parte de Login (que você já tinha)
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // ==========================================
-// 3. NOVA LINHA: Importa o Banco de Dados (Firestore)
+// 3. NOVA LINHA: Importa o Banco de Dados (Realtime Database)
 // ==========================================
-import { getFirestore, doc, setDoc, getDoc, collection } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 // Suas chaves secretas do Firebase (Mantenha as suas aqui!)
 const firebaseConfig = {
@@ -28,7 +28,7 @@ const auth = getAuth(app);
 // ==========================================
 // 4. NOVA LINHA: Inicializa o Banco de Dados
 // ==========================================
-const db = getFirestore(app);
+const db = getDatabase(app);
 
 // ... (Daqui para baixo continua o seu código de login normal) ...
 

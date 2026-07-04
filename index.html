@@ -130,91 +130,71 @@
 
     <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 
-    <script type="module" src="auth.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const video = document.getElementById('videoScanner');
-            const statusRosto = document.getElementById('statusRosto');
+        const firebaseConfig = { 
+            apiKey: "AIzaSyBa9KLqX-WsuqzSVGyF73jXujNmvz7QibA",
+            authDomain: "academia-fenrir.firebaseapp.com",
+            projectId: "academia-fenrir",
+            storageBucket: "academia-fenrir.firebasestorage.app",
+            messagingSenderId: "174772006900",
+            appId: "1:174772006900:web:3a76ecdc3f1dea84a393a1" 
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-            if (typeof faceapi === 'undefined') {
-                statusRosto.textContent = "ERRO: BIBLIOTECA IA BLOQUEADA.";
-                statusRosto.style.color = "red";
-                return;
-            }
+        const video = document.getElementById('videoScanner');
+        const statusRosto = document.getElementById('statusRosto');
 
-            Promise.all([
-                faceapi.nets.tinyFaceDetector.loadFromUri('models'),
-                faceapi.nets.faceLandmark68Net.loadFromUri('models'),
-                faceapi.nets.faceRecognitionNet.loadFromUri('models')
-            ]).then(ligarCamera).catch(err => {
-                console.error("Erro ao carregar modelos:", err);
-                statusRosto.textContent = "ERRO: NÃO FOI POSSÍVEL LER A PASTA MODELS.";
-                statusRosto.style.color = "red";
-            });
+        Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('models'),
+            faceapi.nets.faceLandmark68Net.loadFromUri('models'),
+            faceapi.nets.faceRecognitionNet.loadFromUri('models')
+        ]).then(() => {
+            document.querySelector('.splash-screen').style.display = 'none';
+            navigator.mediaDevices.getUserMedia({ video: true }).then(s => video.srcObject = s);
+        });
 
-            function ligarCamera() {
-                statusRosto.textContent = "A LIGAR CÂMARA (ACEITE O PEDIDO DO NAVEGADOR)...";
-                
-                // Remove o ecrã preto da intro agressivamente para não bloquear
-                const splash = document.querySelector('.splash-screen');
-                if (splash) splash.style.display = 'none';
+        video.addEventListener('playing', async () => {
+            const canvas = document.getElementById('overlayCanvas');
+            const displaySize = { width: video.videoWidth, height: video.videoHeight };
+            faceapi.matchDimensions(canvas, displaySize);
 
-                navigator.mediaDevices.getUserMedia({ video: {} })
-                    .then(stream => {
-                        video.srcObject = stream;
-                    })
-                    .catch(err => {
-                        console.error("Sem acesso à câmara:", err);
-                        statusRosto.textContent = "CÂMARA DESCONECTADA OU BLOQUEADA.";
-                        statusRosto.style.color = "red";
-                    });
-            }
+            async function loop() {
+                if (video.paused || video.ended) return;
+                const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+                                                .withFaceLandmarks().withFaceDescriptor();
 
-            video.addEventListener('playing', () => {
-                
-                // Proteção contra o bug de tamanho 0x0
-                if (video.videoWidth === 0 || video.videoHeight === 0) {
-                    setTimeout(() => video.dispatchEvent(new Event('playing')), 100);
-                    return;
-                }
-
-                statusRosto.textContent = "IA ATIVA. A ANALISAR BIOMETRIA...";
-                const canvas = document.getElementById('overlayCanvas');
-                
-                const displaySize = { width: video.videoWidth, height: video.videoHeight };
-                faceapi.matchDimensions(canvas, displaySize);
-
-                async function rastrearRosto() {
-                    if (video.paused || video.ended) return;
-
-                    try {
-                        const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
-                                                        .withFaceLandmarks()
-                                                        .withFaceDescriptor();
-
-                        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-
-                        if (detections) {
-                            const resizedDetections = faceapi.resizeResults(detections, displaySize);
-                            
-                            faceapi.draw.drawDetections(canvas, resizedDetections);
-                            faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-                            
-                            statusRosto.textContent = "ALVO DETETADO. A VERIFICAR MATRIZ...";
-                        } else {
-                            statusRosto.textContent = "À PROCURA DE ROSTO...";
+                if (detection) {
+                    const snapshot = await get(ref(db, 'alunos/'));
+                    const alunos = snapshot.val();
+                    
+                    let reconhecido = false;
+                    for (let uid in alunos) {
+                        const faceGuardada = new Float32Array(Object.values(alunos[uid].faceDescriptor));
+                        
+                        if (faceGuardada.length === 128) {
+                            const dist = faceapi.euclideanDistance(detection.descriptor, faceGuardada);
+                            if (dist < 0.5) {
+                                statusRosto.textContent = "BEM-VINDO, " + alunos[uid].nome;
+                                reconhecido = true;
+                                break;
+                            }
                         }
-                    } catch (err) {
-                        // Erros silenciosos para não travar a aplicação
                     }
-
-                    requestAnimationFrame(rastrearRosto);
+                    
+                    if (!reconhecido) statusRosto.textContent = "ALUNO NÃO RECONHECIDO";
+                } else {
+                    statusRosto.textContent = "À PROCURA DE ROSTO...";
                 }
-
-                requestAnimationFrame(rastrearRosto);
-            });
+                requestAnimationFrame(loop);
+            }
+            loop();
         });
     </script>
+
+    <script type="module" src="auth.js"></script>
 </body>
 </html>

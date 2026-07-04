@@ -5,6 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fenrir Academia - Meus Treinos</title>
     <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Destaque visual do treino guardado na nuvem */
+        .treino-card.ativo {
+            border: 2px solid var(--cor-primaria);
+            box-shadow: 0 0 15px rgba(0, 255, 100, 0.3);
+        }
+        .btn-escolher.salvo {
+            background-color: var(--cor-primaria);
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* === BARRA DO CRONÓMETRO FLUTUANTE === */
+        .timer-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #111;
+            border: 2px solid var(--cor-primaria);
+            border-radius: 50px;
+            padding: 10px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            z-index: 10000;
+            box-shadow: 0 10px 30px rgba(0, 255, 100, 0.2);
+            width: 90%;
+            max-width: 450px;
+        }
+        .timer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .timer-icon {
+            font-size: 1.8rem;
+            animation: pulse 1s infinite alternate;
+        }
+        .timer-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .timer-workout-name {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .timer-clock {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #fff;
+            font-family: monospace;
+        }
+        .btn-finalizar {
+            background-color: #ff3333;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-finalizar:hover {
+            background-color: #cc0000;
+        }
+
+        /* === ESTILOS DA SECÇÃO DE HISTÓRICO === */
+        .historico-section {
+            margin-top: 40px;
+            width: 100%;
+        }
+        .historico-wrapper {
+            overflow-x: auto;
+            margin-top: 15px;
+            max-height: 300px; /* Cria uma barra de rolagem se o histórico for muito longo */
+            overflow-y: auto;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+    </style>
 </head>
 <body>
 
@@ -17,7 +104,7 @@
         <nav class="menu-nav">
             <a href="dashboard.html" class="menu-item">Página Inicial</a>
             <a href="treinos.html" class="menu-item active">Meus Treinos</a>
-            <a href="#" class="menu-item">Vídeo Aulas</a>
+            <a href="videos.html" class="menu-item">Vídeo Aulas</a>
             <a href="shopping.html" class="menu-item">Shopping</a>
             <a href="pedidos.html" class="menu-item">Meus Pedidos</a>
             <a href="contato.html" class="menu-item">Contato</a>
@@ -30,10 +117,10 @@
         
         <header class="page-header">
             <h1>💪 Ficha de Treinamento</h1>
-            <p>Selecione o seu treino do dia e registre o seu progresso.</p>
+            <p>Define o teu treino atual ou inicia o cronómetro para registar a tua atividade.</p>
         </header>
 
-      <div class="treinos-grid">
+        <div class="treinos-grid">
             
             <section class="dash-card treino-card">
                 <div class="treino-header">
@@ -49,7 +136,7 @@
                         <tr><td>Tríceps Testa</td><td>3</td><td>10</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Treino A">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -66,7 +153,7 @@
                         <tr><td>Rosca Martelo</td><td>3</td><td>15</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Treino B">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -83,7 +170,7 @@
                         <tr><td>Panturrilha Sentado</td><td>4</td><td>20</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Treino C">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -100,7 +187,7 @@
                         <tr><td>Abdominal Supra</td><td>4</td><td>20</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Treino D">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -117,7 +204,7 @@
                         <tr><td>Afundo com Halteres</td><td>3</td><td>12</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Full Body">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -134,7 +221,7 @@
                         <tr><td>Jumping Jacks</td><td>4</td><td>1 min</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="HIIT Cardio">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -151,7 +238,7 @@
                         <tr><td>Remada Pendlay</td><td>4</td><td>6</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Força Bruta">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -168,7 +255,7 @@
                         <tr><td>Caminhada na Esteira</td><td>1</td><td>15 min</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Mobilidade">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -185,7 +272,7 @@
                         <tr><td>Abdução de Quadril</td><td>3</td><td>15</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Glúteos e Posterior">Definir como Meu Treino</button>
             </section>
 
             <section class="dash-card treino-card">
@@ -202,13 +289,48 @@
                         <tr><td>Mountain Climbers</td><td>4</td><td>40 seg</td></tr>
                     </tbody>
                 </table>
-                <button class="btn-iniciar">Iniciar Treino</button>
+                <button class="btn-escolher" data-treino="Funcional">Definir como Meu Treino</button>
             </section>
 
         </div>
+
+        <section class="dash-card historico-section">
+            <h3>📅 Histórico de Atividades Recentes</h3>
+            <div class="historico-wrapper">
+                <table class="treino-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Treino Executado</th>
+                            <th>Duração</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historicoRows">
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: #666; padding: 20px;">
+                                A carregar histórico...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
     </main>
 
-    <script>
+    <div id="timerBar" class="timer-bar" style="display: none;">
+        <div class="timer-info">
+            <span class="timer-icon">⏱️</span>
+            <div class="timer-text">
+                <span id="timerWorkoutName" class="timer-workout-name">Treino</span>
+                <span id="timerClock" class="timer-clock">00:00</span>
+            </div>
+        </div>
+        <button id="btnFinalizarTreino" class="btn-finalizar">FINALIZAR TREINO</button>
+    </div>
+
+    <script type="module">
+        // 1. ARRUMAR O NOME DO UTILIZADOR
         const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
         if (nomeSalvo) {
             const nomeFormatado = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
@@ -216,6 +338,186 @@
         } else {
             document.getElementById('nomeUsuario').textContent = "Lobo";
         }
+
+        // 2. IMPORTAÇÕES DO FIREBASE
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getDatabase, ref, set, get, child, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        // ⚠️ CONFIGURAÇÃO DO SEU FIREBASE HERE:
+        const firebaseConfig = {
+             apiKey: "AIzaSyBa9KLqX-WsuqzSVGyF73jXujNmvz7QibA",
+  authDomain: "academia-fenrir.firebaseapp.com",
+  projectId: "academia-fenrir",
+  storageBucket: "academia-fenrir.firebasestorage.app",
+  messagingSenderId: "174772006900",
+  appId: "1:174772006900:web:3a76ecdc3f1dea84a393a1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        let timerInterval = null;
+        let segundosDecorridos = 0;
+
+        // 3. LÓGICA PRINCIPAL
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const dbRef = ref(db);
+                const botoes = document.querySelectorAll('.btn-escolher');
+
+                // A. Carregar o treino selecionado ao abrir a página
+                try {
+                    const snapshot = await get(child(dbRef, `alunos/${user.uid}/treino_atual`));
+                    if (snapshot.exists()) {
+                        const treinoSalvo = snapshot.val();
+                        
+                        botoes.forEach(btn => {
+                            if (btn.getAttribute('data-treino') === treinoSalvo) {
+                                btn.textContent = "Iniciar Treino ⏱️";
+                                btn.classList.add('salvo');
+                                btn.closest('.treino-card').classList.add('ativo');
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error("Erro ao carregar treino ativo:", error);
+                }
+
+                // === NOVA FUNÇÃO: CARREGAR HISTÓRICO VISÍVEL DO BANCO DE DADOS ===
+                async function carregarHistoricoVisual() {
+                    const historicoRows = document.getElementById('historicoRows');
+                    try {
+                        const snapshot = await get(child(dbRef, `alunos/${user.uid}/historico`));
+                        
+                        if (snapshot.exists()) {
+                            historicoRows.innerHTML = ''; // Limpa o estado de carregamento
+                            const dados = snapshot.val();
+                            
+                            // Reverte a ordem das chaves para exibir o treino mais recente primeiro
+                            const chavesOrdenadas = Object.keys(dados).reverse();
+                            
+                            chavesOrdenadas.forEach(key => {
+                                const registro = dados[key];
+                                const linha = document.createElement('tr');
+                                linha.innerHTML = `
+                                    <td>${registro.data}</td>
+                                    <td><strong>${registro.treino}</strong></td>
+                                    <td style="color: var(--cor-primaria); font-weight: bold;">${registro.duracao}</td>
+                                `;
+                                historicoRows.appendChild(linha);
+                            });
+                        } else {
+                            historicoRows.innerHTML = `
+                                <tr>
+                                    <td colspan="3" style="text-align: center; color: #666; padding: 20px;">
+                                        Nenhum treino registado na sua conta ainda.
+                                    </td>
+                                </tr>`;
+                        }
+                    } catch (error) {
+                        console.error("Erro ao montar tabela de histórico:", error);
+                        historicoRows.innerHTML = `<tr><td colspan="3" style="text-align: center; color: red;">Erro ao carregar dados.</td></tr>`;
+                    }
+                }
+
+                // Chama a função para renderizar o histórico assim que o aluno entra na tela
+                carregarHistoricoVisual();
+
+
+                // B. Ação ao clicar nos botões dos cartões
+                botoes.forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const nomeDoTreino = e.target.getAttribute('data-treino');
+
+                        if (e.target.classList.contains('salvo')) {
+                            iniciarCronometro(nomeDoTreino);
+                            return;
+                        }
+
+                        e.target.textContent = "A guardar...";
+                        try {
+                            await set(ref(db, 'alunos/' + user.uid + '/treino_atual'), nomeDoTreino);
+
+                            botoes.forEach(b => {
+                                b.textContent = "Definir como Meu Treino";
+                                b.classList.remove('salvo');
+                                b.closest('.treino-card').classList.remove('ativo');
+                            });
+
+                            e.target.textContent = "Iniciar Treino ⏱️";
+                            e.target.classList.add('salvo');
+                            e.target.closest('.treino-card').classList.add('ativo');
+
+                        } catch (error) {
+                            console.error("Erro ao salvar:", error);
+                            alert("Falha ao selecionar o treino.");
+                            e.target.textContent = "Definir como Meu Treino";
+                        }
+                    });
+                });
+
+                // C. Função para Ativar o Cronómetro
+                function iniciarCronometro(nomeTreino) {
+                    const timerBar = document.getElementById('timerBar');
+                    const timerWorkoutName = document.getElementById('timerWorkoutName');
+                    const timerClock = document.getElementById('timerClock');
+
+                    timerWorkoutName.textContent = nomeTreino;
+                    segundosDecorridos = 0;
+                    timerClock.textContent = "00:00";
+                    timerBar.style.display = "flex";
+
+                    if (timerInterval) clearInterval(timerInterval);
+
+                    timerInterval = setInterval(() => {
+                        segundosDecorridos++;
+                        const mins = String(Math.floor(segundosDecorridos / 60)).padStart(2, '0');
+                        const secs = String(segundosDecorridos % 60).padStart(2, '0');
+                        timerClock.textContent = `${mins}:${secs}`;
+                    }, 1000);
+                }
+
+                // D. Evento do botão Finalizar Treino (Guarda e Recarrega a Tabela)
+                document.getElementById('btnFinalizarTreino').addEventListener('click', async () => {
+                    clearInterval(timerInterval);
+                    const timerBar = document.getElementById('timerBar');
+                    const tempoFinal = document.getElementById('timerClock').textContent;
+                    const nomeTreinoFinal = document.getElementById('timerWorkoutName').textContent;
+
+                    timerBar.style.display = "none";
+
+                    try {
+                        const hoje = new Date();
+                        const dia = String(hoje.getDate()).padStart(2, '0');
+                        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+                        const ano = hoje.getFullYear();
+                        const dataFormatada = `${dia}/${mes}/${ano}`;
+
+                        const historicoRef = push(ref(db, `alunos/${user.uid}/historico`));
+                        
+                        await set(historicoRef, {
+                            treino: nomeTreinoFinal,
+                            duracao: tempoFinal,
+                            data: dataFormatada
+                        });
+
+                        alert(`Treino concluído com sucesso! Registado: ${tempoFinal}`);
+                        
+                        // REFRESH AUTOMÁTICO: Atualiza a tabela na hora sem dar F5
+                        carregarHistoricoVisual();
+
+                    } catch (error) {
+                        console.error("Erro ao gravar histórico:", error);
+                        alert("O treino foi encerrado, mas ocorreu um erro ao sincronizar com a nuvem.");
+                    }
+                });
+
+            } else {
+                window.location.href = "index.html";
+            }
+        });
     </script>
 </body>
 </html>

@@ -49,6 +49,16 @@
 
         <div class="dashboard-grid">
             
+<section class="dash-card">
+                <h3>🔥 Seu Treino Atual</h3>
+                <p id="treinoAtualDisplay" style="font-size: 1.2rem; margin: 15px 0; color: var(--cor-primaria); font-weight: bold;">
+                    Buscando dados...
+                </p>
+                <a href="treinos.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">
+                    ABRIR FICHA
+                </a>
+            </section>
+
             <section class="dash-card">
                 <h3>Vídeo Aulas Recentes</h3>
                 <div class="video-placeholder">
@@ -68,47 +78,82 @@
         </div>
     </main>
 
-   <script>
-        // === 1. CARREGA O NOME DO USUÁRIO ===
-        const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
-        let nomeFinal = "Lobo"; 
+ <script type="module">
+        // ==========================================
+        // 1. IMPORTAÇÕES DO FIREBASE (Realtime Database)
+        // ==========================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        if (nomeSalvo) {
-            nomeFinal = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
-        }
+        // ⚠️ COLE SUAS CHAVES DO FIREBASE AQUI:
+        const firebaseConfig = {
+             apiKey: "AIzaSyBa9KLqX-WsuqzSVGyF73jXujNmvz7QibA",
+  authDomain: "academia-fenrir.firebaseapp.com",
+  projectId: "academia-fenrir",
+  storageBucket: "academia-fenrir.firebasestorage.app",
+  messagingSenderId: "174772006900",
+  appId: "1:174772006900:web:3a76ecdc3f1dea84a393a1"
+        };
 
-        document.getElementById('nomeUsuario').textContent = nomeFinal;
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
 
-        // === 3. LÓGICA DO CARROSSEL DE BANNERS (VERSÃO BLINDADA) ===
-        
+        // ==========================================
+        // 2. LÓGICA DE LOGIN E BUSCA DE TREINO
+        // ==========================================
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // --- A. Ajusta o Nome na Tela ---
+                const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
+                let nomeFinal = "Lobo"; 
+                if (nomeSalvo) {
+                    nomeFinal = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
+                }
+                document.getElementById('nomeUsuario').textContent = nomeFinal;
+
+                // --- B. Puxa o Treino do Banco de Dados ---
+                try {
+                    const dbRef = ref(db);
+                    const snapshot = await get(child(dbRef, `alunos/${user.uid}/treino_atual`));
+                    
+                    if (snapshot.exists()) {
+                        document.getElementById('treinoAtualDisplay').textContent = snapshot.val();
+                    } else {
+                        document.getElementById('treinoAtualDisplay').textContent = "Nenhum treino definido.";
+                    }
+                } catch (error) {
+                    console.error("Erro ao puxar treino:", error);
+                    document.getElementById('treinoAtualDisplay').textContent = "Erro ao carregar.";
+                }
+
+            } else {
+                // Se não estiver logado, manda pro login
+                window.location.href = "index.html";
+            }
+        });
+
+        // ==========================================
+        // 3. LÓGICA DO CARROSSEL DE BANNERS
+        // ==========================================
         function iniciarCarrossel() {
-            // Procura os banners
             const slides = document.querySelectorAll('.banner-slide');
-            
-            // Se não achar nenhum banner no HTML, ele cancela para não dar erro
             if (slides.length === 0) {
                 console.log("Nenhum banner encontrado no HTML.");
                 return; 
             }
 
             let slideAtual = 0;
-            const tempoDoBanner = 3000; // 3000 = 3 segundos (perfeito para testar rápido)
+            const tempoDoBanner = 3000; // 3 segundos (teste rápido)
 
-            // Cria o relógio que vai rodar infinitamente
             setInterval(() => {
-                // 1. Remove a classe 'ativa' do banner atual
                 slides[slideAtual].classList.remove('ativa');
-                
-                // 2. Calcula qual é o próximo (se chegar no fim, volta pro zero)
                 slideAtual = (slideAtual + 1) % slides.length;
-                
-                // 3. Adiciona a classe 'ativa' no novo banner
                 slides[slideAtual].classList.add('ativa');
-                
             }, tempoDoBanner);
         }
 
-        // Liga o motor do carrossel
         iniciarCarrossel();
     </script>
 </body>

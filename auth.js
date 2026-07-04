@@ -1,16 +1,17 @@
-/* ==========================================================================
-   CONFIGURAÇÃO DO FIREBASE (IMPORTAÇÕES)
-   ========================================================================== */
-// Importamos as ferramentas diretas dos servidores do Google
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+// 1. Importa o núcleo do Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 
-/* --------------------------------------------------------------------------
-   COLE SUAS CREDENCIAIS AQUI DENTRO!
-   (Substitua este bloco pelas chaves que o Firebase gerou para você)
-   -------------------------------------------------------------------------- */
+// 2. Importa a parte de Login (que você já tinha)
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+// ==========================================
+// 3. NOVA LINHA: Importa o Banco de Dados (Firestore)
+// ==========================================
+import { getFirestore, doc, setDoc, getDoc, collection } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+// Suas chaves secretas do Firebase (Mantenha as suas aqui!)
 const firebaseConfig = {
-    apiKey: "AIzaSyBa9KLqX-WsuqzSVGyF73jXujNmvz7QibA",
+   apiKey: "AIzaSyBa9KLqX-WsuqzSVGyF73jXujNmvz7QibA",
   authDomain: "academia-fenrir.firebaseapp.com",
   projectId: "academia-fenrir",
   storageBucket: "academia-fenrir.firebasestorage.app",
@@ -18,9 +19,18 @@ const firebaseConfig = {
   appId: "1:174772006900:web:3a76ecdc3f1dea84a393a1"
 };
 
-// Inicializando o Firebase e o sistema de Autenticação
+// Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
+
+// Inicializa o Login
 const auth = getAuth(app);
+
+// ==========================================
+// 4. NOVA LINHA: Inicializa o Banco de Dados
+// ==========================================
+const db = getFirestore(app);
+
+// ... (Daqui para baixo continua o seu código de login normal) ...
 
 // Instância do áudio do uivo (pré-carrega para reprodução rápida)
 const somDoLobo = new Audio('audio/uivo.mp3');
@@ -60,26 +70,26 @@ loginForm.addEventListener('submit', (e) => {
             
             let nomeParaExibir = "";
 
-            // 1. Verifica se o usuário tem um nome real cadastrado no Firebase
+            // Verifica se o usuário tem um nome real cadastrado no Firebase
             if (user.displayName) {
                 // Se tiver nome completo, pega apenas o primeiro nome
                 nomeParaExibir = user.displayName.split(' ')[0];
             } else {
-                // PLANO B: Se for uma conta antiga sem nome, pega o começo do e-mail
+                // Se for uma conta antiga sem nome, pega o começo do e-mail
                 nomeParaExibir = user.email.split('@')[0];
             }
             
-            // Salva o nome correto na "mochila" do navegador (localStorage)
+            // salva o nome correto no navegador (localStorage)
             localStorage.setItem('nomeUsuarioFenrir', nomeParaExibir);
             
-            // Redireciona o usuário para o painel inicial somente após o áudio terminar.
+            // redireciona o usuário para o painel inicial somente após o áudio terminar.
             const redirectToDashboard = () => { window.location.href = "dashboard.html"; };
 
-            // Tenta tocar o áudio; se não for possível, redireciona imediatamente.
+            // tenta rodar a musica, se não, joga sozinho
             const playPromise = somDoLobo.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
-                    // Quando terminar, redireciona
+                    // redirecionamento
                     somDoLobo.addEventListener('ended', () => {
                         redirectToDashboard();
                     }, { once: true });
@@ -94,12 +104,12 @@ loginForm.addEventListener('submit', (e) => {
                     redirectToDashboard();
                 });
             } else {
-                // Navegadores antigos: não há Promise, então redireciona imediatamente
+                // 
                 redirectToDashboard();
             }
         })
         .catch((error) => {
-            // SE A SENHA ESTIVER ERRADA OU USUÁRIO NÃO EXISTIR:
+            // caso a senha for errada ou o user tiver cpf cancelado:
             const errorCode = error.code;
             
             if (errorCode === 'auth/invalid-credential') {
@@ -109,6 +119,6 @@ loginForm.addEventListener('submit', (e) => {
             } else {
                 alert("Falha no login. Tente novamente.");
             }
-        }); // <- Fechamento do catch
+        });
 
-}); // <- ESTA É A LINHA MAIS IMPORTANTE! Ela fecha o loginForm.addEventListener que abrimos lá em cima.
+});

@@ -19,6 +19,16 @@
             <h2>Crie sua conta</h2>
         </div>
 
+        <div id="scanner-area" style="display:none; text-align: center; margin-bottom: 20px;">
+            <h3>Escaneie seu rosto para finalizar</h3>
+            <div style="color: #00ff66; margin-bottom: 10px; font-weight: bold;" id="statusRosto">Carregando IA...</div>
+            <div class="facial-scanner-container" style="height: 200px; border: 2px solid #00ff66; border-radius: 8px; position: relative; overflow: hidden; background: #000;">
+                <video id="videoScanner" autoplay muted playsinline style="width: 100%; height: 100%;"></video>
+                <canvas id="overlayCanvas" style="position: absolute; top: 0; left: 0;"></canvas>
+            </div>
+            <button type="button" id="btn-save-face" class="btn-submit" style="background: #0088ff; margin-top: 15px;">GUARDAR BIOMETRIA</button>
+        </div>
+
         <form class="register-form">
             
             <div class="input-group">

@@ -35,14 +35,24 @@ async function prepararBiometria() {
     await loadFaceAPI();
     const MODEL_URL = './models';
     
+    const statusRosto = document.getElementById('statusRosto');
+    
     try {
+        statusRosto.textContent = "Carregando TinyFaceDetector...";
         await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+        
+        statusRosto.textContent = "Carregando FaceLandmark...";
         await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+        
+        statusRosto.textContent = "Carregando FaceRecognition...";
         await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+        
         console.log("IA PRONTA!");
+        statusRosto.textContent = "✅ IA PRONTA! Pode guardar sua biometria.";
     } catch (err) {
         console.error("ERRO ao carregar IA:", err);
-        alert("Erro ao carregar modelos de IA. Verifique a consola para detalhes.");
+        statusRosto.textContent = "❌ ERRO: Pasta models não encontrada";
+        alert("Erro ao carregar IA. Verifique se a pasta 'models' existe na raiz do projeto.");
     }
 }
 
@@ -69,6 +79,12 @@ registerForm.addEventListener('submit', async (e) => {
         // Alternar visualização
         registerForm.style.display = 'none';
         const scannerArea = document.getElementById('scanner-area');
+        
+        if (!scannerArea) {
+            alert("Erro: Elemento scanner-area não encontrado!");
+            return;
+        }
+        
         scannerArea.style.display = 'block';
 
         // Iniciar câmara e IA
@@ -95,16 +111,32 @@ async function iniciarScanner() {
    ========================================================================== */
 document.getElementById('btn-save-face').addEventListener('click', async () => {
     const video = document.getElementById('videoScanner');
+    const statusRosto = document.getElementById('statusRosto');
+    
+    if (!video) {
+        alert("Erro: Elemento vídeo não encontrado!");
+        return;
+    }
+
+    if (!currentUserUid) {
+        alert("Erro: Utilizador não autenticado. Faça o cadastro novamente.");
+        return;
+    }
     
     try {
+        statusRosto.textContent = "Detectando rosto...";
+        
         const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
                                         .withFaceLandmarks()
                                         .withFaceDescriptor();
 
         if (!detection) {
+            statusRosto.textContent = "❌ Rosto não detetado! Aproxime-se e verifique a luz.";
             alert("Rosto não detetado! Aproxime-se e verifique a luz.");
             return;
         }
+
+        statusRosto.textContent = "Guardando biometria...";
 
         await set(ref(db, 'alunos/' + currentUserUid), {
             nome: auth.currentUser.displayName,
@@ -112,10 +144,14 @@ document.getElementById('btn-save-face').addEventListener('click', async () => {
             faceDescriptor: Array.from(detection.descriptor)
         });
 
-        alert("Biometria salva com sucesso!");
-        window.location.href = "index.html";
+        statusRosto.textContent = "✅ Biometria salva com sucesso!";
+        alert("Biometria salva com sucesso! Agora pode fazer login.");
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1500);
     } catch (err) {
         console.error("ERRO:", err);
-        alert("Erro: " + err.message);
+        statusRosto.textContent = "❌ Erro ao guardar biometria";
+        alert("Erro ao guardar biometria: " + err.message);
     }
 });

@@ -1,0 +1,8 @@
+theme: jekyll-theme-minimal
+markdown: kramdown
+exclude:
+  - .git
+  - .gitignore
+  - node_modules
+  - vendor
+  - .vscode

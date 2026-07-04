@@ -162,12 +162,14 @@
             const displaySize = { width: video.videoWidth, height: video.videoHeight };
             faceapi.matchDimensions(canvas, displaySize);
 
+            let usuarioJaReconhecido = false;
+
             async function loop() {
                 if (video.paused || video.ended) return;
                 const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
                                                 .withFaceLandmarks().withFaceDescriptor();
 
-                if (detection) {
+                if (detection && !usuarioJaReconhecido) {
                     const snapshot = await get(ref(db, 'alunos/'));
                     const alunos = snapshot.val();
                     
@@ -179,13 +181,28 @@
                             const dist = faceapi.euclideanDistance(detection.descriptor, faceGuardada);
                             if (dist < 0.5) {
                                 statusRosto.textContent = "BEM-VINDO, " + alunos[uid].nome;
+                                
+                                // Salva os dados do usuário e redireciona
+                                localStorage.setItem('nomeUsuarioFenrir', alunos[uid].nome);
+                                localStorage.setItem('emailUsuarioFenrir', alunos[uid].email);
+                                localStorage.setItem('uidUsuarioFenrir', uid);
+                                
                                 reconhecido = true;
+                                usuarioJaReconhecido = true;
+                                
+                                // Redireciona para o dashboard após 2 segundos
+                                setTimeout(() => {
+                                    window.location.href = "dashboard.html";
+                                }, 2000);
+                                
                                 break;
                             }
                         }
                     }
                     
                     if (!reconhecido) statusRosto.textContent = "ALUNO NÃO RECONHECIDO";
+                } else if (detection && usuarioJaReconhecido) {
+                    // Já foi reconhecido, não faz mais nada
                 } else {
                     statusRosto.textContent = "À PROCURA DE ROSTO...";
                 }

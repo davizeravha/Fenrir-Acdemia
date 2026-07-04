@@ -23,7 +23,7 @@
             <a href="contato.html" class="menu-item">Contato</a>
         </nav>
 
-        <a href="index.html" class="logout-btn">Sair da Conta</a>
+        <a href="#" id="logoutBtn" class="logout-btn">Sair da Conta</a>
     </aside>
 
     <main class="main-content">
@@ -104,9 +104,14 @@
         // 2. LÓGICA DE LOGIN E BUSCA DE TREINO
         // ==========================================
         onAuthStateChanged(auth, async (user) => {
-            if (user) {
+            // Verifica se o usuário está autenticado via Firebase OU se foi reconhecido via rosto
+            const nomeLocalStorage = localStorage.getItem('nomeUsuarioFenrir');
+            const emailLocalStorage = localStorage.getItem('emailUsuarioFenrir');
+            const uidLocalStorage = localStorage.getItem('uidUsuarioFenrir');
+            
+            if (user || (nomeLocalStorage && emailLocalStorage && uidLocalStorage)) {
                 // --- A. Ajusta o Nome na Tela ---
-                const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir');
+                const nomeSalvo = localStorage.getItem('nomeUsuarioFenrir') || (user && user.displayName);
                 let nomeFinal = "Lobo"; 
                 if (nomeSalvo) {
                     nomeFinal = nomeSalvo.charAt(0).toUpperCase() + nomeSalvo.slice(1);
@@ -115,8 +120,9 @@
 
                 // --- B. Puxa o Treino do Banco de Dados ---
                 try {
+                    const userUid = uidLocalStorage || user.uid;
                     const dbRef = ref(db);
-                    const snapshot = await get(child(dbRef, `alunos/${user.uid}/treino_atual`));
+                    const snapshot = await get(child(dbRef, `alunos/${userUid}/treino_atual`));
                     
                     if (snapshot.exists()) {
                         document.getElementById('treinoAtualDisplay').textContent = snapshot.val();
@@ -129,9 +135,29 @@
                 }
 
             } else {
-                // Se não estiver logado, manda pro login
+                // Se não estiver logado e nem reconhecido, manda pro login
                 window.location.href = "index.html";
             }
+        });
+
+        // ==========================================
+        // LOGOUT COM LIMPEZA DO LOCALSTORAGE
+        // ==========================================
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Limpa dados do localStorage (reconhecimento facial)
+            localStorage.removeItem('nomeUsuarioFenrir');
+            localStorage.removeItem('emailUsuarioFenrir');
+            localStorage.removeItem('uidUsuarioFenrir');
+            
+            // Faz logout do Firebase
+            auth.signOut().then(() => {
+                window.location.href = "index.html";
+            }).catch(err => {
+                console.error("Erro no logout:", err);
+                window.location.href = "index.html";
+            });
         });
 
         // ==========================================
